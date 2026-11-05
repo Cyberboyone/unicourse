@@ -21,6 +21,7 @@ import com.cyberboyone.lecturenotes.ui.viewmodel.DownloadState
  * native ads) and the reader (which carries none), and is also where the
  * interstitial decision fires, right after a download completes.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CourseDetailScreen(navController: NavHostController, courseId: String) {
     val container = LocalAppContainer.current

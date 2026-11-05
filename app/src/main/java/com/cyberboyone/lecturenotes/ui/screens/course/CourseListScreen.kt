@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.cyberboyone.lecturenotes.di.AppViewModelFactory
@@ -21,6 +22,7 @@ import com.cyberboyone.lecturenotes.ui.components.NativeAdCard
 import com.cyberboyone.lecturenotes.ui.navigation.Routes
 import com.cyberboyone.lecturenotes.ui.viewmodel.CourseListViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CourseListScreen(navController: NavHostController, departmentId: String) {
     val container = LocalAppContainer.current

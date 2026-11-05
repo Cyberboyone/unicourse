@@ -16,6 +16,7 @@ import com.cyberboyone.lecturenotes.ui.components.NativeAdCard
 import com.cyberboyone.lecturenotes.ui.navigation.Routes
 import com.cyberboyone.lecturenotes.ui.viewmodel.MyDownloadsViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyDownloadsScreen(navController: NavHostController) {
     val container = LocalAppContainer.current

@@ -16,6 +16,7 @@ import com.cyberboyone.lecturenotes.ui.components.NativeAdCard
 import com.cyberboyone.lecturenotes.ui.navigation.Routes
 import com.cyberboyone.lecturenotes.ui.viewmodel.FacultyListViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FacultyListScreen(navController: NavHostController) {
     val container = LocalAppContainer.current
