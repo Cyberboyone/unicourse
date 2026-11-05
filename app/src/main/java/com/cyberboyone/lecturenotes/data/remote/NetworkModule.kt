@@ -18,7 +18,7 @@ object NetworkModule {
 
     private const val SUPABASE_URL = "https://vebuqchewawykyavkgfh.supabase.co/"
     private const val SUPABASE_ANON_KEY = "sb_publishable_YdF1p5anBAAr9k9ONjC9cw_lRrB34mJ"
-    const val R2_PUBLIC_BASE_URL = "https://pub-d87bb310444d419f84acc7f26944c3c4.r2.dev/"
+    const val R2_PUBLIC_BASE_URL = "https://nakudin.com/"
 
     private val authInterceptor = Interceptor { chain ->
         val request = chain.request().newBuilder()
