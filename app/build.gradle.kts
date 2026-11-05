@@ -61,7 +61,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
 
     // PDF rendering (in-app reader)
-    implementation("com.github.barteksc:android-pdf-viewer:3.2.0-beta.1")
+    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
 
     // AdMob
     implementation("com.google.android.gms:play-services-ads:23.2.0")
