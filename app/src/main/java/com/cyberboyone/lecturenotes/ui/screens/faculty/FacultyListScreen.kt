@@ -7,9 +7,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -69,12 +67,7 @@ fun FacultyListScreen(navController: NavHostController) {
                 title = {
                     Column {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Default.School,
-                                contentDescription = null,
-                                tint = AccentGold,
-                                modifier = Modifier.size(22.dp)
-                            )
+                            Text(text = "🎓", fontSize = 20.sp)
                             Spacer(Modifier.width(8.dp))
                             Text(
                                 text = "UniCourse Nigeria",
@@ -101,11 +94,7 @@ fun FacultyListScreen(navController: NavHostController) {
                         )
                     }
                     IconButton(onClick = { navController.navigate(Routes.DOWNLOADS) }) {
-                        Icon(
-                            imageVector = Icons.Default.Download,
-                            contentDescription = "My Downloads",
-                            tint = Color.White
-                        )
+                        Text(text = "📥", fontSize = 20.sp)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

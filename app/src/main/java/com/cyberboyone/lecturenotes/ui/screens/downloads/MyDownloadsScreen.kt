@@ -5,11 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -65,7 +62,7 @@ fun MyDownloadsScreen(navController: NavHostController) {
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White
                         )
@@ -99,12 +96,7 @@ fun MyDownloadsScreen(navController: NavHostController) {
                                 .background(MaterialTheme.colorScheme.surfaceVariant),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.Download,
-                                contentDescription = null,
-                                tint = NigeriaGreen,
-                                modifier = Modifier.size(40.dp)
-                            )
+                            Text(text = "📥", fontSize = 38.sp)
                         }
                         Spacer(Modifier.height(16.dp))
                         Text(
@@ -126,7 +118,7 @@ fun MyDownloadsScreen(navController: NavHostController) {
                             colors = ButtonDefaults.buttonColors(containerColor = NigeriaGreen),
                             shape = RoundedCornerShape(12.dp)
                         ) {
-                            Icon(Icons.Default.MenuBook, contentDescription = null)
+                            Text(text = "📚", fontSize = 18.sp)
                             Spacer(Modifier.width(8.dp))
                             Text("Browse Faculties")
                         }
@@ -180,12 +172,7 @@ fun DownloadedCourseCard(
                     .background(NigeriaGreen.copy(alpha = 0.12f)),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Default.Book,
-                    contentDescription = null,
-                    tint = NigeriaGreen,
-                    modifier = Modifier.size(26.dp)
-                )
+                Text(text = "📖", fontSize = 24.sp)
             }
 
             Spacer(Modifier.width(14.dp))

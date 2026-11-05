@@ -6,9 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -56,7 +55,7 @@ fun SearchScreen(navController: NavHostController) {
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White
                         )
@@ -237,12 +236,7 @@ fun SearchResultCard(
                     .background(NigeriaGreen.copy(alpha = 0.12f)),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Default.Description,
-                    contentDescription = null,
-                    tint = NigeriaGreen,
-                    modifier = Modifier.size(22.dp)
-                )
+                Text(text = "📄", fontSize = 20.sp)
             }
 
             Spacer(Modifier.width(14.dp))

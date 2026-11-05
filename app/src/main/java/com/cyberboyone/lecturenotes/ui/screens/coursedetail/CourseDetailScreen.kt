@@ -7,13 +7,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Update
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,7 +32,6 @@ import com.cyberboyone.lecturenotes.ui.navigation.Routes
 import com.cyberboyone.lecturenotes.ui.theme.AccentGold
 import com.cyberboyone.lecturenotes.ui.theme.NigeriaGreen
 import com.cyberboyone.lecturenotes.ui.theme.NigeriaGreenDark
-import com.cyberboyone.lecturenotes.ui.theme.NigeriaGreenLight
 import com.cyberboyone.lecturenotes.ui.viewmodel.CourseDetailViewModel
 import com.cyberboyone.lecturenotes.ui.viewmodel.DownloadState
 
@@ -83,7 +79,7 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White
                         )
@@ -134,12 +130,7 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.Book,
-                                contentDescription = null,
-                                tint = AccentGold,
-                                modifier = Modifier.size(56.dp)
-                            )
+                            Text(text = "📖", fontSize = 54.sp)
                         }
                     }
 
@@ -221,7 +212,7 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Security,
+                        imageVector = Icons.Default.Lock,
                         contentDescription = null,
                         tint = NigeriaGreen,
                         modifier = Modifier.size(24.dp)
@@ -259,7 +250,7 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Update,
+                            imageVector = Icons.Default.Refresh,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSecondaryContainer
                         )
@@ -315,12 +306,8 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                         style = MaterialTheme.typography.titleSmall.copy(color = Color.White)
                     )
                 } else {
-                    val icon = if (downloaded != null && !updateAvailable) Icons.Default.Book else Icons.Default.Download
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.White
-                    )
+                    val emoji = if (downloaded != null && !updateAvailable) "📖" else "⬇️"
+                    Text(text = emoji, fontSize = 18.sp)
                     Spacer(Modifier.width(10.dp))
                     Text(
                         text = when {

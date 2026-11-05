@@ -5,10 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -66,7 +65,7 @@ fun DepartmentListScreen(navController: NavHostController, facultyId: String) {
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White
                         )
@@ -198,15 +197,10 @@ fun DepartmentCard(
                         .background(MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.School,
-                        contentDescription = null,
-                        tint = NigeriaGreen,
-                        modifier = Modifier.size(20.dp)
-                    )
+                    Text(text = "🎓", fontSize = 18.sp)
                 }
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                    imageVector = Icons.Default.ArrowForward,
                     contentDescription = null,
                     tint = NigeriaGreen,
                     modifier = Modifier.size(16.dp)
