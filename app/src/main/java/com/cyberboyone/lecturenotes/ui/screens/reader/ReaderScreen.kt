@@ -1,7 +1,9 @@
 package com.cyberboyone.lecturenotes.ui.screens.reader
 
 import android.view.WindowManager
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -59,7 +61,7 @@ fun ReaderScreen(courseId: String) {
     Scaffold { padding ->
         when {
             error != null -> Text(error!!, modifier = Modifier.fillMaxSize().padding(padding))
-            pdfBytes == null -> androidx.compose.foundation.layout.Box(
+            pdfBytes == null -> Box(
                 Modifier.fillMaxSize().padding(padding),
                 contentAlignment = Alignment.Center
             ) { CircularProgressIndicator() }
