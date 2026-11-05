@@ -1,0 +1,60 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & Package Android App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.7'
+
+      - name: Create local.properties
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Inject Configuration (if secrets provided)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          R2_PUBLIC_BASE_URL: ${{ secrets.R2_PUBLIC_BASE_URL }}
+        run: |
+          CONFIG_FILE="app/src/main/java/com/cyberboyone/lecturenotes/data/remote/NetworkModule.kt"
+          if [ -n "$SUPABASE_URL" ]; then
+            sed -i "s|SUPABASE_URL = \".*\"|SUPABASE_URL = \"$SUPABASE_URL\"|g" $CONFIG_FILE
+          fi
+          if [ -n "$SUPABASE_ANON_KEY" ]; then
+            sed -i "s|SUPABASE_ANON_KEY = \".*\"|SUPABASE_ANON_KEY = \"$SUPABASE_ANON_KEY\"|g" $CONFIG_FILE
+          fi
+          if [ -n "$R2_PUBLIC_BASE_URL" ]; then
+            sed -i "s|R2_PUBLIC_BASE_URL = \".*\"|R2_PUBLIC_BASE_URL = \"$R2_PUBLIC_BASE_URL\"|g" $CONFIG_FILE
+          fi
+
+      - name: Build Debug APK
+        run: |
+          gradle :app:assembleDebug --stacktrace
+
+      - name: Upload Debug APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-university-lecture-notes-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          retention-days: 30

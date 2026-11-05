@@ -1,0 +1,3 @@
+<resources>
+    <style name="Theme.LectureNotes" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
