@@ -45,11 +45,10 @@ fun LectureNotesNavGraph(navController: NavHostController = rememberNavControlle
             val courseId = backStackEntry.arguments?.getString("courseId").orEmpty()
             CourseDetailScreen(navController, courseId)
         }
-        // Reader is intentionally reached only from CourseDetail's "Open" action,
-        // never from a list screen directly — keeps ad logic out of this screen entirely.
+        // Reader is reached from CourseDetail's "Open" action
         composable(Routes.READER) { backStackEntry ->
             val courseId = backStackEntry.arguments?.getString("courseId").orEmpty()
-            ReaderScreen(courseId)
+            ReaderScreen(courseId, onBack = { navController.popBackStack() })
         }
         composable(Routes.DOWNLOADS) { MyDownloadsScreen(navController) }
     }

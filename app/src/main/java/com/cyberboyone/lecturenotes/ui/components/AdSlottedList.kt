@@ -1,17 +1,15 @@
 package com.cyberboyone.lecturenotes.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
-/**
- * Renders [items] as cards, inserting a native-ad placeholder after every 4th
- * card — the one placement rule shared by Faculty, Department, Course,
- * Search and My Downloads. A sealed `Row` keeps "card" and "ad" distinct so
- * the grid never mistakes one for the other.
- */
 sealed class AdSlottedRow<T> {
     data class Item<T>(val value: T) : AdSlottedRow<T>()
     class Ad<T> : AdSlottedRow<T>()
@@ -30,12 +28,27 @@ fun <T> AdSlottedGrid(
     items: List<T>,
     modifier: Modifier = Modifier,
     columns: Int = 2,
+    contentPadding: PaddingValues = PaddingValues(12.dp),
     cardContent: @Composable (T) -> Unit,
     adContent: @Composable () -> Unit
 ) {
     val rows = withNativeAdsEvery4(items)
-    LazyVerticalGrid(columns = GridCells.Fixed(columns), modifier = modifier) {
-        items(rows) { row ->
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(columns),
+        modifier = modifier,
+        contentPadding = contentPadding,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(
+            items = rows,
+            span = { row ->
+                when (row) {
+                    is AdSlottedRow.Item -> GridItemSpan(1)
+                    is AdSlottedRow.Ad -> GridItemSpan(maxLineSpan)
+                }
+            }
+        ) { row ->
             when (row) {
                 is AdSlottedRow.Item -> cardContent(row.value)
                 is AdSlottedRow.Ad -> adContent()
