@@ -84,9 +84,8 @@ class AdManager(private val context: Context) {
     }
 
     companion object {
-        // TODO: replace with the real AdMob interstitial unit ID before release.
-        const val INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
-        // TODO: replace with the real AdMob native ad unit ID before release.
-        const val NATIVE_AD_UNIT_ID = "ca-app-pub-3940256099942544/2247696110"
+        const val INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-9529770421530115/4062730942"
+        const val NATIVE_AD_UNIT_ID = "ca-app-pub-9529770421530115/2286614844"
+        const val BANNER_AD_UNIT_ID = "ca-app-pub-9529770421530115/2177757450"
     }
 }
