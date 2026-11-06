@@ -11,6 +11,11 @@ interface CatalogRepository {
     suspend fun getCourses(departmentId: String): List<Course>
     suspend fun searchCourses(query: String): List<Course>
     suspend fun getCourse(courseId: String): Course?
+    suspend fun getPopularCourses(limit: Int = 6): List<Course>
+    suspend fun getAllCourses(): List<Course>
+    suspend fun getDepartmentCourseCount(departmentId: String): Int
+    suspend fun getTotalCourseCount(): Int
+    suspend fun seedIfNeeded()
     /** Refreshes the local cache from Supabase when online. Safe to call opportunistically. */
     suspend fun refreshCatalog()
 }

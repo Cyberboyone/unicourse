@@ -17,6 +17,8 @@ class AppViewModelFactory(
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T = when (modelClass) {
+        HomeViewModel::class.java ->
+            HomeViewModel(container.catalogRepository, container.downloadRepository) as T
         FacultyListViewModel::class.java ->
             FacultyListViewModel(container.catalogRepository) as T
         DepartmentListViewModel::class.java ->

@@ -29,11 +29,23 @@ interface CatalogDao {
     @Query("SELECT * FROM courses WHERE departmentId = :departmentId ORDER BY title")
     suspend fun getCourses(departmentId: String): List<CourseEntity>
 
-    @Query("SELECT * FROM courses WHERE title LIKE '%' || :query || '%' ORDER BY title")
+    @Query("SELECT * FROM courses WHERE title LIKE '%' || :query || '%' OR id LIKE '%' || :query || '%' ORDER BY title")
     suspend fun searchCourses(query: String): List<CourseEntity>
 
     @Query("SELECT * FROM courses WHERE id = :courseId")
     suspend fun getCourse(courseId: String): CourseEntity?
+
+    @Query("SELECT * FROM courses ORDER BY title LIMIT :limit")
+    suspend fun getPopularCourses(limit: Int): List<CourseEntity>
+
+    @Query("SELECT * FROM courses ORDER BY title")
+    suspend fun getAllCourses(): List<CourseEntity>
+
+    @Query("SELECT COUNT(*) FROM courses WHERE departmentId = :departmentId")
+    suspend fun getCourseCountForDepartment(departmentId: String): Int
+
+    @Query("SELECT COUNT(*) FROM courses")
+    suspend fun getTotalCourseCount(): Int
 
     @Query("DELETE FROM faculties")
     suspend fun clearFaculties()

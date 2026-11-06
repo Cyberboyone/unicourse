@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -16,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,13 +23,11 @@ import androidx.navigation.NavHostController
 import com.cyberboyone.lecturenotes.data.model.Course
 import com.cyberboyone.lecturenotes.di.AppViewModelFactory
 import com.cyberboyone.lecturenotes.di.LocalAppContainer
-import com.cyberboyone.lecturenotes.ui.components.AdSlottedGrid
-import com.cyberboyone.lecturenotes.ui.components.NativeAdCard
+import com.cyberboyone.lecturenotes.ui.components.*
 import com.cyberboyone.lecturenotes.ui.navigation.Routes
-import com.cyberboyone.lecturenotes.ui.theme.NigeriaGreen
+import com.cyberboyone.lecturenotes.ui.theme.*
 import com.cyberboyone.lecturenotes.ui.viewmodel.SearchViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(navController: NavHostController) {
     val container = LocalAppContainer.current
@@ -42,28 +38,10 @@ fun SearchScreen(navController: NavHostController) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Search Lecture Notes",
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = NigeriaGreen
-                )
+            UniCourseTopBar(
+                title = "Search Materials",
+                subtitle = "Find lecture notes across all universities",
+                onBack = { navController.popBackStack() }
             )
         }
     ) { padding ->
@@ -73,7 +51,7 @@ fun SearchScreen(navController: NavHostController) {
                 .padding(padding)
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            // Search Input Box
+            // Search Input Field
             OutlinedTextField(
                 value = query,
                 onValueChange = {
@@ -85,7 +63,7 @@ fun SearchScreen(navController: NavHostController) {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = null,
-                        tint = NigeriaGreen
+                        tint = ElectricViolet
                     )
                 },
                 trailingIcon = {
@@ -99,27 +77,27 @@ fun SearchScreen(navController: NavHostController) {
                     }
                 },
                 singleLine = true,
-                shape = RoundedCornerShape(14.dp),
+                shape = RoundedCornerShape(16.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = NigeriaGreen,
+                    focusedBorderColor = ElectricViolet,
                     unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
                     focusedContainerColor = MaterialTheme.colorScheme.surface,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surface
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(14.dp)
+                    .padding(horizontal = 14.dp, vertical = 8.dp)
             )
 
             if (isSearching) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(12.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(
-                        color = NigeriaGreen,
+                        color = ElectricViolet,
                         strokeWidth = 2.5.dp,
                         modifier = Modifier.size(24.dp)
                     )
@@ -128,7 +106,6 @@ fun SearchScreen(navController: NavHostController) {
 
             when {
                 query.isBlank() -> {
-                    // Empty search prompt with quick sample chips
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -136,20 +113,27 @@ fun SearchScreen(navController: NavHostController) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Text(text = "🔍", fontSize = 48.sp)
-                        Spacer(Modifier.height(12.dp))
+                        Box(
+                            modifier = Modifier
+                                .size(72.dp)
+                                .clip(CircleShape)
+                                .background(ElectricViolet.copy(alpha = 0.12f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(text = "🔍", fontSize = 34.sp)
+                        }
+                        Spacer(Modifier.height(16.dp))
                         Text(
-                            text = "Find Any Course",
+                            text = "Find Any Course Note",
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                         )
-                        Spacer(Modifier.height(8.dp))
+                        Spacer(Modifier.height(6.dp))
                         Text(
-                            text = "Search across 117+ courses by code, topic, or department.",
+                            text = "Search across 117+ courses by code, title, or topic.",
                             style = MaterialTheme.typography.bodyMedium,
-                            textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        Spacer(Modifier.height(18.dp))
+                        Spacer(Modifier.height(20.dp))
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             modifier = Modifier.wrapContentSize()
@@ -160,43 +144,28 @@ fun SearchScreen(navController: NavHostController) {
                                         query = sample
                                         viewModel.onQueryChanged(sample)
                                     },
-                                    label = { Text(sample) }
+                                    label = { Text(sample, fontWeight = FontWeight.SemiBold) },
+                                    shape = RoundedCornerShape(12.dp)
                                 )
                             }
                         }
                     }
                 }
                 results.isEmpty() && !isSearching -> {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(24.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(text = "📂", fontSize = 44.sp)
-                        Spacer(Modifier.height(12.dp))
-                        Text(
-                            text = "No matches for \"$query\"",
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-                        )
-                        Spacer(Modifier.height(6.dp))
-                        Text(
-                            text = "Check the course code or try searching by general keyword.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = TextAlign.Center
-                        )
-                    }
+                    EmptyStateView(
+                        emoji = "📂",
+                        title = "No Matches Found",
+                        subtitle = "No courses found for \"$query\". Try searching by code (e.g. MTH 101, GST 111) or general keyword."
+                    )
                 }
                 else -> {
                     AdSlottedGrid(
                         items = results,
                         modifier = Modifier.fillMaxSize(),
                         columns = 1,
-                        contentPadding = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
+                        contentPadding = PaddingValues(start = 14.dp, end = 14.dp, top = 4.dp, bottom = 90.dp),
                         cardContent = { course ->
-                            SearchResultCard(
+                            SearchResultItemCard(
                                 course = course,
                                 onClick = { navController.navigate(Routes.courseDetail(course.id)) }
                             )
@@ -210,16 +179,19 @@ fun SearchScreen(navController: NavHostController) {
 }
 
 @Composable
-fun SearchResultCard(
+fun SearchResultItemCard(
     course: Course,
     onClick: () -> Unit
 ) {
+    val courseCode = extractCourseCode(course.id, course.title)
+    val sizeStr = formatFileSize(course.fileSizeBytes)
+
     Card(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(18.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -231,36 +203,57 @@ fun SearchResultCard(
         ) {
             Box(
                 modifier = Modifier
-                    .size(42.dp)
-                    .clip(CircleShape)
-                    .background(NigeriaGreen.copy(alpha = 0.12f)),
+                    .size(46.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(ElectricViolet.copy(alpha = 0.12f)),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "📄", fontSize = 20.sp)
+                Text(text = "📄", fontSize = 22.sp)
             }
 
             Spacer(Modifier.width(14.dp))
 
             Column(modifier = Modifier.weight(1f)) {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(ElectricViolet)
+                        .padding(horizontal = 6.dp, vertical = 2.dp)
+                ) {
+                    Text(
+                        text = courseCode,
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    )
+                }
+                Spacer(Modifier.height(4.dp))
                 Text(
                     text = course.title,
-                    style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 18.sp
+                    ),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = "Version ${course.latestVersion}",
+                    text = "Version ${course.latestVersion}" + if (sizeStr.isNotBlank()) " • $sizeStr" else "",
                     style = MaterialTheme.typography.labelSmall.copy(
-                        color = MaterialTheme.colorScheme.outline
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 )
             }
 
+            Spacer(Modifier.width(8.dp))
+
             TextButton(onClick = onClick) {
                 Text(
-                    text = "View",
-                    color = NigeriaGreen,
+                    text = "View →",
+                    color = ElectricViolet,
                     fontWeight = FontWeight.Bold
                 )
             }

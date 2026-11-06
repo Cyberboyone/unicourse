@@ -5,18 +5,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,53 +22,49 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.cyberboyone.lecturenotes.di.AppViewModelFactory
 import com.cyberboyone.lecturenotes.di.LocalAppContainer
-import com.cyberboyone.lecturenotes.ui.components.AdSlottedGrid
-import com.cyberboyone.lecturenotes.ui.components.NativeAdCard
+import com.cyberboyone.lecturenotes.ui.components.*
 import com.cyberboyone.lecturenotes.ui.navigation.Routes
-import com.cyberboyone.lecturenotes.ui.theme.AccentGold
-import com.cyberboyone.lecturenotes.ui.theme.NigeriaGreen
+import com.cyberboyone.lecturenotes.ui.theme.*
 import com.cyberboyone.lecturenotes.ui.viewmodel.DownloadedCourseRow
 import com.cyberboyone.lecturenotes.ui.viewmodel.MyDownloadsViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyDownloadsScreen(navController: NavHostController) {
     val container = LocalAppContainer.current
     val viewModel: MyDownloadsViewModel = viewModel(factory = AppViewModelFactory(container))
     val rows by viewModel.rows.collectAsState()
 
+    var searchQuery by remember { mutableStateOf("") }
+    var totalStorageBytes by remember { mutableLongStateOf(0L) }
+
+    LaunchedEffect(rows) {
+        totalStorageBytes = withContext(Dispatchers.IO) {
+            rows.sumOf { r ->
+                val f = File(r.downloaded.localEncryptedPath)
+                if (f.exists()) f.length() else 0L
+            }
+        }
+    }
+
+    val filteredRows = remember(rows, searchQuery) {
+        if (searchQuery.isBlank()) rows
+        else {
+            val q = searchQuery.trim().lowercase()
+            rows.filter { r ->
+                r.downloaded.courseId.lowercase().contains(q) ||
+                (r.course?.title?.lowercase()?.contains(q) == true)
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Column {
-                        Text(
-                            text = "My Downloads",
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                        )
-                        Text(
-                            text = "Accessible 100% offline",
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = Color.White.copy(alpha = 0.85f)
-                            )
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = NigeriaGreen
-                )
+            UniCourseTopBar(
+                title = "My Offline Notes",
+                subtitle = "${rows.size} notes saved • ${if (totalStorageBytes > 0) formatFileSize(totalStorageBytes) else "0 KB"}"
             )
         }
     ) { padding ->
@@ -81,59 +75,56 @@ fun MyDownloadsScreen(navController: NavHostController) {
                 .background(MaterialTheme.colorScheme.background)
         ) {
             if (rows.isEmpty()) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.padding(32.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(80.dp)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.surfaceVariant),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(text = "📥", fontSize = 38.sp)
-                        }
-                        Spacer(Modifier.height(16.dp))
-                        Text(
-                            text = "No Downloads Yet",
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold
-                            )
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            text = "Any lecture notes you download will be securely saved here for reading without internet.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.height(24.dp))
-                        Button(
-                            onClick = { navController.navigate(Routes.FACULTIES) },
-                            colors = ButtonDefaults.buttonColors(containerColor = NigeriaGreen),
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Text(text = "📚", fontSize = 18.sp)
-                            Spacer(Modifier.width(8.dp))
-                            Text("Browse Faculties")
-                        }
-                    }
-                }
+                EmptyStateView(
+                    emoji = "📥",
+                    title = "No Downloaded Notes Yet",
+                    subtitle = "Download course materials to study 100% offline without needing mobile data or WiFi.",
+                    actionLabel = "Browse Faculties",
+                    onAction = { navController.navigate(Routes.FACULTIES) }
+                )
             } else {
+                // Search Within Downloads
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    placeholder = { Text("Filter your saved notes...") },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null,
+                            tint = ElectricViolet
+                        )
+                    },
+                    trailingIcon = {
+                        if (searchQuery.isNotEmpty()) {
+                            IconButton(onClick = { searchQuery = "" }) {
+                                Icon(Icons.Default.Clear, contentDescription = "Clear")
+                            }
+                        }
+                    },
+                    singleLine = true,
+                    shape = RoundedCornerShape(16.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = ElectricViolet,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+                        focusedContainerColor = MaterialTheme.colorScheme.surface,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surface
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 14.dp, vertical = 8.dp)
+                )
+
                 AdSlottedGrid(
-                    items = rows,
+                    items = filteredRows,
                     modifier = Modifier.fillMaxSize(),
                     columns = 1,
-                    contentPadding = PaddingValues(14.dp),
+                    contentPadding = PaddingValues(start = 14.dp, end = 14.dp, top = 4.dp, bottom = 90.dp),
                     cardContent = { row ->
                         DownloadedCourseCard(
                             row = row,
-                            onClick = { navController.navigate(Routes.courseDetail(row.downloaded.courseId)) }
+                            onOpen = { navController.navigate(Routes.reader(row.downloaded.courseId)) },
+                            onDetail = { navController.navigate(Routes.courseDetail(row.downloaded.courseId)) }
                         )
                     },
                     adContent = { NativeAdCard() }
@@ -146,30 +137,31 @@ fun MyDownloadsScreen(navController: NavHostController) {
 @Composable
 fun DownloadedCourseCard(
     row: DownloadedCourseRow,
-    onClick: () -> Unit
+    onOpen: () -> Unit,
+    onDetail: () -> Unit
 ) {
+    val courseCode = extractCourseCode(row.downloaded.courseId, row.course?.title.orEmpty())
+
     Card(
-        onClick = onClick,
+        onClick = onDetail,
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
-        shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(14.dp),
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
-                    .size(48.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(NigeriaGreen.copy(alpha = 0.12f)),
+                    .size(50.dp)
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(ElectricViolet.copy(alpha = 0.12f)),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "📖", fontSize = 24.sp)
@@ -178,48 +170,73 @@ fun DownloadedCourseCard(
             Spacer(Modifier.width(14.dp))
 
             Column(modifier = Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(ElectricViolet)
+                            .padding(horizontal = 6.dp, vertical = 2.dp)
+                    ) {
+                        Text(
+                            text = courseCode,
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                fontSize = 9.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        )
+                    }
+                    if (row.updateAvailable) {
+                        Spacer(Modifier.width(6.dp))
+                        UpdateAvailableBadge()
+                    }
+                }
+
+                Spacer(Modifier.height(4.dp))
+
                 Text(
-                    text = row.course?.title ?: row.downloaded.courseId,
+                    text = row.course?.title ?: row.downloaded.courseId.uppercase(),
                     style = MaterialTheme.typography.titleSmall.copy(
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 18.sp
                     ),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
+
                 Spacer(Modifier.height(4.dp))
+
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = null,
-                        tint = NigeriaGreen,
+                        tint = NeonLime,
                         modifier = Modifier.size(13.dp)
                     )
                     Spacer(Modifier.width(4.dp))
                     Text(
-                        text = "Saved • v${row.downloaded.downloadedVersion}",
+                        text = "Encrypted v${row.downloaded.downloadedVersion}",
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = NigeriaGreen,
-                            fontWeight = FontWeight.SemiBold
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     )
-                    if (row.updateAvailable) {
-                        Spacer(Modifier.width(8.dp))
-                        Text(
-                            text = "• Update available",
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = AccentGold,
-                                fontWeight = FontWeight.Bold
-                            )
-                        )
-                    }
                 }
             }
 
-            TextButton(onClick = onClick) {
+            Spacer(Modifier.width(8.dp))
+
+            Button(
+                onClick = onOpen,
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = ElectricViolet),
+                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp)
+            ) {
                 Text(
-                    text = "Open",
-                    color = NigeriaGreen,
-                    fontWeight = FontWeight.Bold
+                    text = "Read",
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
                 )
             }
         }

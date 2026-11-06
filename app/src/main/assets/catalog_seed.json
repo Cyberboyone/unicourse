@@ -1,0 +1,1231 @@
+{
+  "faculties": [
+    {
+      "id": "agriculture",
+      "name": "Agriculture",
+      "cover_url": null
+    },
+    {
+      "id": "arts",
+      "name": "Arts",
+      "cover_url": null
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "cover_url": null
+    },
+    {
+      "id": "general_studies",
+      "name": "General Studies",
+      "cover_url": null
+    },
+    {
+      "id": "health",
+      "name": "Health Sciences",
+      "cover_url": null
+    },
+    {
+      "id": "law",
+      "name": "Law",
+      "cover_url": null
+    },
+    {
+      "id": "management",
+      "name": "Management",
+      "cover_url": null
+    },
+    {
+      "id": "science",
+      "name": "Science",
+      "cover_url": null
+    },
+    {
+      "id": "social_science",
+      "name": "Social Sciences",
+      "cover_url": null
+    }
+  ],
+  "departments": [
+    {
+      "id": "accounting",
+      "faculty_id": "management",
+      "name": "Accounting"
+    },
+    {
+      "id": "agric_econ",
+      "faculty_id": "agriculture",
+      "name": "Agricultural Economics"
+    },
+    {
+      "id": "agriculture_dept",
+      "faculty_id": "agriculture",
+      "name": "Agriculture"
+    },
+    {
+      "id": "biology",
+      "faculty_id": "science",
+      "name": "Biological Sciences"
+    },
+    {
+      "id": "business_admin",
+      "faculty_id": "management",
+      "name": "Business Administration"
+    },
+    {
+      "id": "chemistry",
+      "faculty_id": "science",
+      "name": "Chemistry"
+    },
+    {
+      "id": "computer_science",
+      "faculty_id": "science",
+      "name": "Computer Science"
+    },
+    {
+      "id": "economics",
+      "faculty_id": "social_science",
+      "name": "Economics"
+    },
+    {
+      "id": "education_dept",
+      "faculty_id": "education",
+      "name": "Education"
+    },
+    {
+      "id": "english",
+      "faculty_id": "arts",
+      "name": "English and Literary Studies"
+    },
+    {
+      "id": "entrepreneurship",
+      "faculty_id": "general_studies",
+      "name": "Entrepreneurship"
+    },
+    {
+      "id": "general_studies_dept",
+      "faculty_id": "general_studies",
+      "name": "General Studies"
+    },
+    {
+      "id": "history",
+      "faculty_id": "arts",
+      "name": "History and International Studies"
+    },
+    {
+      "id": "law_dept",
+      "faculty_id": "law",
+      "name": "Law"
+    },
+    {
+      "id": "marketing",
+      "faculty_id": "management",
+      "name": "Marketing"
+    },
+    {
+      "id": "math",
+      "faculty_id": "science",
+      "name": "Mathematics"
+    },
+    {
+      "id": "nursing",
+      "faculty_id": "health",
+      "name": "Nursing Science"
+    },
+    {
+      "id": "philosophy",
+      "faculty_id": "arts",
+      "name": "Philosophy"
+    },
+    {
+      "id": "physics",
+      "faculty_id": "science",
+      "name": "Physics"
+    },
+    {
+      "id": "political_science",
+      "faculty_id": "social_science",
+      "name": "Political Science"
+    },
+    {
+      "id": "psychology",
+      "faculty_id": "social_science",
+      "name": "Psychology"
+    },
+    {
+      "id": "public_admin",
+      "faculty_id": "management",
+      "name": "Public Administration"
+    },
+    {
+      "id": "public_health",
+      "faculty_id": "health",
+      "name": "Public Health"
+    },
+    {
+      "id": "sociology",
+      "faculty_id": "social_science",
+      "name": "Sociology"
+    },
+    {
+      "id": "stats",
+      "faculty_id": "science",
+      "name": "Statistics"
+    }
+  ],
+  "courses": [
+    {
+      "id": "acc101",
+      "department_id": "accounting",
+      "title": "ACC 101: Introduction to Financial Accounting",
+      "cover_url": "covers/acc101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 552449,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "acc102",
+      "department_id": "accounting",
+      "title": "ACC 102: Introduction to Financial Accounting II",
+      "cover_url": "covers/acc102.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 491588,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "acc201",
+      "department_id": "accounting",
+      "title": "ACC 201: Cost Accounting",
+      "cover_url": "covers/acc201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 486107,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "acc301",
+      "department_id": "accounting",
+      "title": "ACC 301: Financial Accounting",
+      "cover_url": "covers/acc301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 377877,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "acc401",
+      "department_id": "accounting",
+      "title": "ACC 401: Advanced Financial Accounting",
+      "cover_url": "covers/acc401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 380387,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "aec301",
+      "department_id": "agric_econ",
+      "title": "AEC 301: Farm Management and Accounting",
+      "cover_url": "covers/aec301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 529623,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "agr101",
+      "department_id": "agriculture_dept",
+      "title": "AGR 101: Introduction to Agriculture",
+      "cover_url": "covers/agr101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 460003,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "agr201",
+      "department_id": "agriculture_dept",
+      "title": "AGR 201: Principles of Crop Production",
+      "cover_url": "covers/agr201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 445623,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "agr202",
+      "department_id": "agriculture_dept",
+      "title": "AGR 202: Principles of Animal Production",
+      "cover_url": "covers/agr202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 513925,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "agr302",
+      "department_id": "agriculture_dept",
+      "title": "AGR 302: Agricultural Statistics and Data Processing",
+      "cover_url": "covers/agr302.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 487996,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "agr401",
+      "department_id": "agriculture_dept",
+      "title": "AGR 401: Agricultural Product Storage",
+      "cover_url": "covers/agr401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 409434,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bio101",
+      "department_id": "biology",
+      "title": "BIO 101: General Biology I",
+      "cover_url": "covers/bio101.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 693858,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bio102",
+      "department_id": "biology",
+      "title": "BIO 102: General Biology II",
+      "cover_url": "covers/bio102.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 521810,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bio201",
+      "department_id": "biology",
+      "title": "BIO 201: Cell Biology",
+      "cover_url": "covers/bio201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 365738,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bio202",
+      "department_id": "biology",
+      "title": "BIO 202: General Physiology",
+      "cover_url": "covers/bio202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 406600,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bio301",
+      "department_id": "biology",
+      "title": "BIO 301: Genetics II",
+      "cover_url": "covers/bio301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 503163,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bio401",
+      "department_id": "biology",
+      "title": "BIO 401: Population Genetics",
+      "cover_url": "covers/bio401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 365709,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bus101",
+      "department_id": "business_admin",
+      "title": "BUS 101: Introduction to Business",
+      "cover_url": "covers/bus101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 518832,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bus102",
+      "department_id": "business_admin",
+      "title": "BUS 102: Introduction to Management",
+      "cover_url": "covers/bus102.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 433467,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bus103",
+      "department_id": "business_admin",
+      "title": "BUS 103: Business Mathematics",
+      "cover_url": "covers/bus103.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 458576,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bus201",
+      "department_id": "business_admin",
+      "title": "BUS 201: Principles of Management I",
+      "cover_url": "covers/bus201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 505617,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bus301",
+      "department_id": "business_admin",
+      "title": "BUS 301: Management Theory I",
+      "cover_url": "covers/bus301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 427437,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "bus401",
+      "department_id": "business_admin",
+      "title": "BUS 401: Business Policy and Strategy",
+      "cover_url": "covers/bus401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 421701,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "chm101",
+      "department_id": "chemistry",
+      "title": "CHM 101: General Chemistry I",
+      "cover_url": "covers/chm101.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 649613,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "chm102",
+      "department_id": "chemistry",
+      "title": "CHM 102: General Chemistry II",
+      "cover_url": "covers/chm102.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 534862,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "chm201",
+      "department_id": "chemistry",
+      "title": "CHM 201: Organic Chemistry I",
+      "cover_url": "covers/chm201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 364544,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "chm202",
+      "department_id": "chemistry",
+      "title": "CHM 202: Inorganic Chemistry II",
+      "cover_url": "covers/chm202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 416407,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "chm301",
+      "department_id": "chemistry",
+      "title": "CHM 301: Physical Chemistry III",
+      "cover_url": "covers/chm301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 527509,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "chm401",
+      "department_id": "chemistry",
+      "title": "CHM 401: Instrumental Methods of Analysis",
+      "cover_url": "covers/chm401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 367304,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "csc101",
+      "department_id": "computer_science",
+      "title": "CSC 101: Introduction to Computer Science",
+      "cover_url": "covers/csc101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 540815,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "csc102",
+      "department_id": "computer_science",
+      "title": "CSC 102: Introduction to Computer Programming",
+      "cover_url": "covers/csc102.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 449391,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "csc201",
+      "department_id": "computer_science",
+      "title": "CSC 201: Computer Programming I",
+      "cover_url": "covers/csc201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 471220,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "csc301",
+      "department_id": "computer_science",
+      "title": "CSC 301: Data Structures",
+      "cover_url": "covers/csc301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 504714,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "csc401",
+      "department_id": "computer_science",
+      "title": "CSC 401: Software Engineering",
+      "cover_url": "covers/csc401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 365445,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eco101",
+      "department_id": "economics",
+      "title": "ECO 101: Principles of Economics I",
+      "cover_url": "covers/eco101.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 690650,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eco102",
+      "department_id": "economics",
+      "title": "ECO 102: Principles of Economics II",
+      "cover_url": "covers/eco102.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 580995,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eco201",
+      "department_id": "economics",
+      "title": "ECO 201: Principles of Microeconomics I",
+      "cover_url": "covers/eco201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 547878,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eco202",
+      "department_id": "economics",
+      "title": "ECO 202: Principles of Economics II",
+      "cover_url": "covers/eco202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 535182,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eco301",
+      "department_id": "economics",
+      "title": "ECO 301: Microeconomic Theory I",
+      "cover_url": "covers/eco301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 394440,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eco401",
+      "department_id": "economics",
+      "title": "ECO 401: Advanced Microeconomics I",
+      "cover_url": "covers/eco401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 425206,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "edu101",
+      "department_id": "education_dept",
+      "title": "EDU 101: Introduction to Education",
+      "cover_url": "covers/edu101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 442503,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "edu201",
+      "department_id": "education_dept",
+      "title": "EDU 201: Educational Psychology",
+      "cover_url": "covers/edu201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 459371,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "edu202",
+      "department_id": "education_dept",
+      "title": "EDU 202: Curriculum and Instruction",
+      "cover_url": "covers/edu202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 490885,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "edu301",
+      "department_id": "education_dept",
+      "title": "EDU 301: Educational Administration and Planning",
+      "cover_url": "covers/edu301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 505715,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "edu302",
+      "department_id": "education_dept",
+      "title": "EDU 302: ICT in Education",
+      "cover_url": "covers/edu302.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 386533,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "edu305",
+      "department_id": "education_dept",
+      "title": "EDU 305: Educational Technology",
+      "cover_url": "covers/edu305.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 484041,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "edu401",
+      "department_id": "education_dept",
+      "title": "EDU 401: Research Methods and Data Processing",
+      "cover_url": "covers/edu401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 411514,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eng101",
+      "department_id": "english",
+      "title": "ENG 101: Introduction to Literature",
+      "cover_url": "covers/eng101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 458129,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eng201",
+      "department_id": "english",
+      "title": "ENG 201: An Introduction to Morphology and Syntax",
+      "cover_url": "covers/eng201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 467590,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eng202",
+      "department_id": "english",
+      "title": "ENG 202: Introduction to Poetry and Drama",
+      "cover_url": "covers/eng202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 455592,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eng301",
+      "department_id": "english",
+      "title": "ENG 301: Discourse Analysis and English Usage",
+      "cover_url": "covers/eng301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 372916,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "eng401",
+      "department_id": "english",
+      "title": "ENG 401: Stylistics and Literary Language",
+      "cover_url": "covers/eng401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 373357,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "ent101",
+      "department_id": "entrepreneurship",
+      "title": "ENT 101: Introduction to Entrepreneurship",
+      "cover_url": "covers/ent101.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 539133,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "gst101",
+      "department_id": "general_studies_dept",
+      "title": "GST 101: Use of English and Communication Skills I",
+      "cover_url": "covers/gst101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 390309,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "gst102",
+      "department_id": "general_studies_dept",
+      "title": "GST 102: Use of English and Communication Skills II",
+      "cover_url": "covers/gst102.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 375767,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "gst111",
+      "department_id": "general_studies_dept",
+      "title": "GST 111: Communication in English",
+      "cover_url": "covers/gst111.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 517351,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "gst112",
+      "department_id": "general_studies_dept",
+      "title": "GST 112: Nigerian Peoples and Culture",
+      "cover_url": "covers/gst112.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 801107,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "gst121",
+      "department_id": "general_studies_dept",
+      "title": "GST 121: Use of Library, Study Skills and ICT",
+      "cover_url": "covers/gst121.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 471132,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "gst201",
+      "department_id": "general_studies_dept",
+      "title": "GST 201: Nigerian Peoples and Culture",
+      "cover_url": "covers/gst201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 431391,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "gst202",
+      "department_id": "general_studies_dept",
+      "title": "GST 202: Peace Studies and Conflict Resolution",
+      "cover_url": "covers/gst202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 481386,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "gst401",
+      "department_id": "general_studies_dept",
+      "title": "GST 401: Citizenship, Ethics and National Development",
+      "cover_url": "covers/gst401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 407622,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "his101",
+      "department_id": "history",
+      "title": "HIS 101: Introduction to Nigerian History",
+      "cover_url": "covers/his101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 482281,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "his201",
+      "department_id": "history",
+      "title": "HIS 201: History of Nigeria up to 1800",
+      "cover_url": "covers/his201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 495001,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "his202",
+      "department_id": "history",
+      "title": "HIS 202: Economic History of Nigeria in the 19th Century",
+      "cover_url": "covers/his202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 444433,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "his301",
+      "department_id": "history",
+      "title": "HIS 301: Nigerian History",
+      "cover_url": "covers/his301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 376279,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "his401",
+      "department_id": "history",
+      "title": "HIS 401: Historiography and Nigerian History",
+      "cover_url": "covers/his401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 376536,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "law101",
+      "department_id": "law_dept",
+      "title": "LAW 101: Nigerian Legal System and Legal Method",
+      "cover_url": "covers/law101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 478579,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "law102",
+      "department_id": "law_dept",
+      "title": "LAW 102: Nigerian Legal System",
+      "cover_url": "covers/law102.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 487772,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "law201",
+      "department_id": "law_dept",
+      "title": "LAW 201: Law of Contract I",
+      "cover_url": "covers/law201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 470853,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "law202",
+      "department_id": "law_dept",
+      "title": "LAW 202: Law of Contract II",
+      "cover_url": "covers/law202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 494614,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "law203",
+      "department_id": "law_dept",
+      "title": "LAW 203: Constitutional Law I",
+      "cover_url": "covers/law203.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 410098,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "law204",
+      "department_id": "law_dept",
+      "title": "LAW 204: Constitutional Law II",
+      "cover_url": "covers/law204.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 402633,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "law303",
+      "department_id": "law_dept",
+      "title": "LAW 303: Law of Torts I",
+      "cover_url": "covers/law303.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 500067,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "law401",
+      "department_id": "law_dept",
+      "title": "LAW 401: Law of Evidence",
+      "cover_url": "covers/law401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 384015,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "mkt101",
+      "department_id": "marketing",
+      "title": "MKT 101: Principles of Marketing",
+      "cover_url": "covers/mkt101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 478249,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "mkt201",
+      "department_id": "marketing",
+      "title": "MKT 201: Elements of Marketing I",
+      "cover_url": "covers/mkt201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 510949,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "mkt301",
+      "department_id": "marketing",
+      "title": "MKT 301: Principles of Marketing",
+      "cover_url": "covers/mkt301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 383154,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "mkt401",
+      "department_id": "marketing",
+      "title": "MKT 401: Marketing Management",
+      "cover_url": "covers/mkt401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 428654,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "mth101",
+      "department_id": "math",
+      "title": "MTH 101: Elementary Mathematics I",
+      "cover_url": "covers/mth101.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 558321,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "mth102",
+      "department_id": "math",
+      "title": "MTH 102: Elementary Mathematics II",
+      "cover_url": "covers/mth102.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 715018,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "mth201",
+      "department_id": "math",
+      "title": "MTH 201: Mathematical Methods I",
+      "cover_url": "covers/mth201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 393451,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "mth202",
+      "department_id": "math",
+      "title": "MTH 202: Elementary Differential Equations",
+      "cover_url": "covers/mth202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 402852,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "mth301",
+      "department_id": "math",
+      "title": "MTH 301: Abstract Algebra I",
+      "cover_url": "covers/mth301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 465433,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "mth401",
+      "department_id": "math",
+      "title": "MTH 401: Theory of Ordinary Differential Equations",
+      "cover_url": "covers/mth401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 433116,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "nur101",
+      "department_id": "nursing",
+      "title": "NUR 101: Fundamentals of Nursing",
+      "cover_url": "covers/nur101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 462904,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "nur201",
+      "department_id": "nursing",
+      "title": "NUR 201: Foundation of Nursing III",
+      "cover_url": "covers/nur201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 488342,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "nur301",
+      "department_id": "nursing",
+      "title": "NUR 301: Mental Health Nursing I",
+      "cover_url": "covers/nur301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 378967,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "nur401",
+      "department_id": "nursing",
+      "title": "NUR 401: Medical-Surgical Nursing III",
+      "cover_url": "covers/nur401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 421745,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "pad101",
+      "department_id": "public_admin",
+      "title": "PAD 101: Introduction to Public Administration",
+      "cover_url": "covers/pad101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 460180,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "pad201",
+      "department_id": "public_admin",
+      "title": "PAD 201: Introduction to Public Administration",
+      "cover_url": "covers/pad201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 527523,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phl101",
+      "department_id": "philosophy",
+      "title": "PHL 101: Introduction to Philosophy",
+      "cover_url": "covers/phl101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 471142,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phl201",
+      "department_id": "philosophy",
+      "title": "PHL 201: Introduction to Metaphysics",
+      "cover_url": "covers/phl201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 444916,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phl301",
+      "department_id": "philosophy",
+      "title": "PHL 301: Symbolic Logic",
+      "cover_url": "covers/phl301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 414401,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phl401",
+      "department_id": "philosophy",
+      "title": "PHL 401: Late Modern Philosophy",
+      "cover_url": "covers/phl401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 406410,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phs101",
+      "department_id": "public_health",
+      "title": "PHS 101: Introduction to Public Health",
+      "cover_url": "covers/phs101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 454579,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phs201",
+      "department_id": "public_health",
+      "title": "PHS 201: Health Promotion and Education",
+      "cover_url": "covers/phs201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 436167,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phs301",
+      "department_id": "public_health",
+      "title": "PHS 301: Health Management Information Systems",
+      "cover_url": "covers/phs301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 504538,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phs305",
+      "department_id": "public_health",
+      "title": "PHS 305: Seminars in Public Health",
+      "cover_url": "covers/phs305.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 388475,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phs401",
+      "department_id": "public_health",
+      "title": "PHS 401: Health Policy and Finance",
+      "cover_url": "covers/phs401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 424452,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phy101",
+      "department_id": "physics",
+      "title": "PHY 101: General Physics I \u2014 Mechanics",
+      "cover_url": "covers/phy101.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 768480,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phy102",
+      "department_id": "physics",
+      "title": "PHY 102: General Physics II \u2014 Electricity, Magnetism and Modern Physics",
+      "cover_url": "covers/phy102.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 530526,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phy201",
+      "department_id": "physics",
+      "title": "PHY 201: Classical Mechanics I",
+      "cover_url": "covers/phy201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 398057,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phy202",
+      "department_id": "physics",
+      "title": "PHY 202: Electric Circuits and Electronics",
+      "cover_url": "covers/phy202.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 404253,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phy301",
+      "department_id": "physics",
+      "title": "PHY 301: Classical Mechanics",
+      "cover_url": "covers/phy301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 494703,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "phy401",
+      "department_id": "physics",
+      "title": "PHY 401: Quantum Mechanics I",
+      "cover_url": "covers/phy401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 416611,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "pos101",
+      "department_id": "political_science",
+      "title": "POS 101: Introduction to Political Science and Nigerian Government",
+      "cover_url": "covers/pos101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 544584,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "pos201",
+      "department_id": "political_science",
+      "title": "POS 201: Nigerian Government and Politics I",
+      "cover_url": "covers/pos201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 569037,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "pos301",
+      "department_id": "political_science",
+      "title": "POS 301: Political Thoughts I",
+      "cover_url": "covers/pos301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 405771,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "pos401",
+      "department_id": "political_science",
+      "title": "POS 401: Development Administration",
+      "cover_url": "covers/pos401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 416209,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "psy101",
+      "department_id": "psychology",
+      "title": "PSY 101: Introduction to Psychology",
+      "cover_url": "covers/psy101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 467210,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "psy201",
+      "department_id": "psychology",
+      "title": "PSY 201: Determinants of Behaviour",
+      "cover_url": "covers/psy201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 420905,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "psy301",
+      "department_id": "psychology",
+      "title": "PSY 301: Clinical Psychology",
+      "cover_url": "covers/psy301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 433592,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "soc101",
+      "department_id": "sociology",
+      "title": "SOC 101: Introduction to Sociology",
+      "cover_url": "covers/soc101.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 496676,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "soc201",
+      "department_id": "sociology",
+      "title": "SOC 201: History of Social Thought",
+      "cover_url": "covers/soc201.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 501506,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "soc301",
+      "department_id": "sociology",
+      "title": "SOC 301: Sociological Theory and Analysis",
+      "cover_url": "covers/soc301.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 412215,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "soc401",
+      "department_id": "sociology",
+      "title": "SOC 401: Contemporary Sociological Theories",
+      "cover_url": "covers/soc401.jpg",
+      "latest_version": 1,
+      "file_size_bytes": 420168,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    },
+    {
+      "id": "sta111",
+      "department_id": "stats",
+      "title": "STA 111: Descriptive Statistics",
+      "cover_url": "covers/sta111.jpg",
+      "latest_version": 2,
+      "file_size_bytes": 600463,
+      "updated_at": "2026-11-05T12:10:24.345587+00:00"
+    }
+  ]
+}

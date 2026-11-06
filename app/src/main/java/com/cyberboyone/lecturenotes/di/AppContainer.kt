@@ -5,6 +5,7 @@ import com.cyberboyone.lecturenotes.ads.AdManager
 import com.cyberboyone.lecturenotes.ads.InterstitialAdPolicy
 import com.cyberboyone.lecturenotes.data.local.EncryptedFileManager
 import com.cyberboyone.lecturenotes.data.local.LectureNotesDatabase
+import com.cyberboyone.lecturenotes.data.local.ThemePreference
 import com.cyberboyone.lecturenotes.data.remote.CatalogRemoteDataSource
 import com.cyberboyone.lecturenotes.data.remote.NetworkModule
 import com.cyberboyone.lecturenotes.data.remote.R2StorageService
@@ -18,15 +19,17 @@ import com.cyberboyone.lecturenotes.data.repository.DownloadRepository
  * LocalAppContainer (see AppContainerProvider.kt) and a thin ViewModelFactory.
  */
 class AppContainer(context: Context) {
-    private val appContext = context.applicationContext
+    val appContext: Context = context.applicationContext
 
     private val database = LectureNotesDatabase.get(appContext)
     private val r2 = R2StorageService(NetworkModule.r2Client)
     private val remoteDataSource = CatalogRemoteDataSource(NetworkModule.supabaseApi)
     private val fileManager = EncryptedFileManager(appContext)
 
+    val themePreference = ThemePreference(appContext)
+
     val catalogRepository: CatalogRepository =
-        CatalogRepositoryImpl(remoteDataSource, database.catalogDao())
+        CatalogRepositoryImpl(remoteDataSource, database.catalogDao(), appContext)
 
     val downloadRepository = DownloadRepository(
         dao = database.downloadDao(),

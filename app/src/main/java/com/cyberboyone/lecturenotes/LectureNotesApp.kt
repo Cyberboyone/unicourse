@@ -18,9 +18,10 @@ class LectureNotesApp : Application() {
         container = AppContainer(this)
         container.adManager.preloadInterstitial()
 
-        // Refresh the catalog cache on launch so browsing is current when online,
-        // and still works from the last cache when it isn't.
+        // 1. Instantly seed from bundled assets so all 117 courses are available offline with 0 delay.
+        // 2. Refresh the catalog cache on launch if online to keep data synced.
         CoroutineScope(Dispatchers.IO).launch {
+            runCatching { container.catalogRepository.seedIfNeeded() }
             runCatching { container.catalogRepository.refreshCatalog() }
         }
     }

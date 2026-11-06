@@ -1,13 +1,14 @@
 package com.cyberboyone.lecturenotes.ui.screens.coursedetail
 
 import android.app.Activity
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Refresh
@@ -28,20 +29,12 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.cyberboyone.lecturenotes.di.AppViewModelFactory
 import com.cyberboyone.lecturenotes.di.LocalAppContainer
+import com.cyberboyone.lecturenotes.ui.components.*
 import com.cyberboyone.lecturenotes.ui.navigation.Routes
-import com.cyberboyone.lecturenotes.ui.theme.AccentGold
-import com.cyberboyone.lecturenotes.ui.theme.NigeriaGreen
-import com.cyberboyone.lecturenotes.ui.theme.NigeriaGreenDark
+import com.cyberboyone.lecturenotes.ui.theme.*
 import com.cyberboyone.lecturenotes.ui.viewmodel.CourseDetailViewModel
 import com.cyberboyone.lecturenotes.ui.viewmodel.DownloadState
 
-private fun formatFileSize(bytes: Long): String {
-    if (bytes <= 0) return ""
-    val mb = bytes / (1024.0 * 1024.0)
-    return if (mb >= 1.0) String.format("%.1f MB", mb) else String.format("%d KB", bytes / 1024)
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CourseDetailScreen(navController: NavHostController, courseId: String) {
     val container = LocalAppContainer.current
@@ -54,6 +47,7 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
     val downloadState by viewModel.downloadState.collectAsState()
 
     val updateAvailable = course != null && downloaded?.isUpdateAvailable(course!!.latestVersion) == true
+    val courseCode = extractCourseCode(courseId, course?.title.orEmpty())
 
     LaunchedEffect(downloadState) {
         val state = downloadState
@@ -66,26 +60,10 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Course Details",
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = NigeriaGreen)
+            UniCourseTopBar(
+                title = "Course Details",
+                subtitle = courseCode,
+                onBack = { navController.popBackStack() }
             )
         }
     ) { padding ->
@@ -98,65 +76,96 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                 .background(MaterialTheme.colorScheme.background)
                 .verticalScroll(scrollState)
                 .padding(16.dp)
+                .padding(bottom = 80.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Hero Cover Card
+            // Hero Book Cover Card with ContentScale.Fit - ZERO CROPPING!
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(220.dp),
-                shape = RoundedCornerShape(18.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    .height(260.dp),
+                shape = RoundedCornerShape(26.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(
                             Brush.verticalGradient(
-                                colors = listOf(NigeriaGreenDark, NigeriaGreen)
+                                colors = listOf(
+                                    ElectricViolet.copy(alpha = 0.08f),
+                                    VibrantBlue.copy(alpha = 0.16f)
+                                )
                             )
-                        )
+                        ),
+                    contentAlignment = Alignment.Center
                 ) {
                     val cover = course?.coverUrl.orEmpty()
                     if (cover.isNotBlank()) {
                         AsyncImage(
                             model = cover,
                             contentDescription = course?.title,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
+                            contentScale = ContentScale.Fit, // FULL COVER DISPLAYED
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .padding(12.dp)
+                                .clip(RoundedCornerShape(16.dp))
                         )
                     } else {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
+                        Box(
+                            modifier = Modifier
+                                .size(88.dp)
+                                .clip(CircleShape)
+                                .background(ElectricViolet.copy(alpha = 0.15f)),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Text(text = "📖", fontSize = 54.sp)
+                            Text(text = "📖", fontSize = 44.sp)
                         }
                     }
 
-                    // Status Badge overlay
+                    // Course Code Badge (Top-Start)
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .padding(14.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(ElectricViolet)
+                            .padding(horizontal = 10.dp, vertical = 5.dp)
+                    ) {
+                        Text(
+                            text = courseCode,
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        )
+                    }
+
+                    // Downloaded Status Badge (Top-End)
                     if (downloaded != null) {
                         Box(
                             modifier = Modifier
                                 .align(Alignment.TopEnd)
-                                .padding(12.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(NigeriaGreen)
-                                .padding(horizontal = 10.dp, vertical = 4.dp)
+                                .padding(14.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(NeonLime)
+                                .padding(horizontal = 10.dp, vertical = 5.dp)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(
                                     imageVector = Icons.Default.CheckCircle,
                                     contentDescription = null,
-                                    tint = Color.White,
+                                    tint = Color(0xFF1E3A00),
                                     modifier = Modifier.size(14.dp)
                                 )
                                 Spacer(Modifier.width(4.dp))
                                 Text(
-                                    text = "Downloaded",
+                                    text = "SAVED OFFLINE",
                                     style = MaterialTheme.typography.labelSmall.copy(
-                                        color = Color.White,
-                                        fontWeight = FontWeight.Bold
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.ExtraBold,
+                                        color = Color(0xFF1E3A00)
                                     )
                                 )
                             }
@@ -165,17 +174,22 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                 }
             }
 
-            Spacer(Modifier.height(18.dp))
-
             // Course Title
-            Text(
-                text = course?.title ?: "Loading course...",
-                style = MaterialTheme.typography.headlineMedium.copy(
-                    fontWeight = FontWeight.Bold
+            Column {
+                Text(
+                    text = course?.title ?: courseCode,
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 26.sp
+                    )
                 )
-            )
-
-            Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    text = "Official Nigerian University Lecture Note",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
 
             // Metadata Chips Row
             Row(
@@ -187,46 +201,60 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                     if (size.isNotBlank()) {
                         AssistChip(
                             onClick = {},
-                            label = { Text("Size: $size") }
+                            label = { Text("Size: $size", fontWeight = FontWeight.SemiBold) },
+                            shape = RoundedCornerShape(12.dp)
                         )
                     }
                     AssistChip(
                         onClick = {},
-                        label = { Text("Version ${c.latestVersion}") }
+                        label = { Text("Version ${c.latestVersion}", fontWeight = FontWeight.SemiBold) },
+                        shape = RoundedCornerShape(12.dp)
                     )
                 }
+                AssistChip(
+                    onClick = {},
+                    label = { Text("100% Offline", fontWeight = FontWeight.SemiBold) },
+                    shape = RoundedCornerShape(12.dp)
+                )
             }
 
-            Spacer(Modifier.height(16.dp))
-
-            // Security & Privacy Card
+            // Security & Offline Reader Card
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
                 )
             ) {
                 Row(
-                    modifier = Modifier.padding(14.dp),
+                    modifier = Modifier.padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = null,
-                        tint = NigeriaGreen,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(Modifier.width(12.dp))
+                    Box(
+                        modifier = Modifier
+                            .size(44.dp)
+                            .clip(CircleShape)
+                            .background(ElectricViolet.copy(alpha = 0.12f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = null,
+                            tint = ElectricViolet,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    }
+                    Spacer(Modifier.width(14.dp))
                     Column {
                         Text(
-                            text = "Secure In-App Reader",
+                            text = "Hardware-Encrypted Reader",
                             style = MaterialTheme.typography.titleSmall.copy(
                                 fontWeight = FontWeight.Bold
                             )
                         )
+                        Spacer(Modifier.height(2.dp))
                         Text(
-                            text = "Read completely offline with encrypted storage and anti-leak protection.",
+                            text = "Encrypted with AES-256 in your device's Keystore. Screenshot protected with zero ads in reader.",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -234,15 +262,13 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                 }
             }
 
-            Spacer(Modifier.height(16.dp))
-
-            // Update Alert Chip if applicable
+            // Update Alert Card if applicable
             if (updateAvailable) {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(18.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        containerColor = SoftYellow.copy(alpha = 0.25f)
                     )
                 ) {
                     Row(
@@ -252,83 +278,71 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSecondaryContainer
+                            tint = Color(0xFF6B5900)
                         )
-                        Spacer(Modifier.width(10.dp))
+                        Spacer(Modifier.width(12.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = "New Version Available",
                                 style = MaterialTheme.typography.titleSmall.copy(
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF6B5900)
                                 )
                             )
                             Text(
-                                text = "An updated syllabus is available for this course.",
-                                style = MaterialTheme.typography.bodySmall
+                                text = "An updated syllabus has been published.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color(0xFF6B5900)
                             )
                         }
                         TextButton(onClick = { viewModel.download(courseId) }) {
-                            Text("Update", fontWeight = FontWeight.Bold)
+                            Text("Update", fontWeight = FontWeight.Bold, color = ElectricViolet)
                         }
                     }
                 }
-                Spacer(Modifier.height(16.dp))
             }
 
-            // Main Action Button (Download / Open)
+            // Primary Action Button (Download / Open Offline Reader)
             val isDownloading = downloadState is DownloadState.Downloading
-            Button(
+            val isAlreadyDownloaded = downloaded != null && !updateAvailable
+
+            GradientButton(
+                text = when {
+                    isDownloading -> "Downloading Lecture Note..."
+                    isAlreadyDownloaded -> "📖 Open Offline Reader"
+                    updateAvailable -> "🔄 Update Lecture Note"
+                    else -> "📥 Download Note (100% Free)"
+                },
                 onClick = {
-                    if (downloaded != null && !updateAvailable) {
+                    if (isAlreadyDownloaded) {
                         navController.navigate(Routes.reader(courseId))
                     } else {
                         viewModel.download(courseId)
                     }
                 },
-                enabled = !isDownloading && course != null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(54.dp),
-                shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = NigeriaGreen
-                )
-            ) {
-                if (isDownloading) {
-                    CircularProgressIndicator(
-                        color = Color.White,
-                        strokeWidth = 2.5.dp,
-                        modifier = Modifier.size(22.dp)
-                    )
-                    Spacer(Modifier.width(12.dp))
-                    Text(
-                        text = "Downloading lecture note...",
-                        style = MaterialTheme.typography.titleSmall.copy(color = Color.White)
-                    )
-                } else {
-                    val emoji = if (downloaded != null && !updateAvailable) "📖" else "⬇️"
-                    Text(text = emoji, fontSize = 18.sp)
-                    Spacer(Modifier.width(10.dp))
-                    Text(
-                        text = when {
-                            downloaded != null && !updateAvailable -> "Open Offline Reader"
-                            updateAvailable -> "Update Lecture Note"
-                            else -> "Download for Offline Study"
-                        },
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
+                enabled = !isDownloading && (isAlreadyDownloaded || course != null),
+                gradient = if (isAlreadyDownloaded) listOf(ElectricViolet, DeepPurple) else PrimaryGradient,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            // Animated Download Progress
+            AnimatedVisibility(visible = isDownloading) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    DownloadProgressIndicator()
                 }
             }
 
             // Error display
             if (downloadState is DownloadState.Failed) {
-                Spacer(Modifier.height(12.dp))
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(10.dp),
+                    shape = RoundedCornerShape(14.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.errorContainer
                     )
@@ -337,7 +351,7 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                         text = (downloadState as DownloadState.Failed).message,
                         color = MaterialTheme.colorScheme.onErrorContainer,
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(12.dp)
+                        modifier = Modifier.padding(14.dp)
                     )
                 }
             }
