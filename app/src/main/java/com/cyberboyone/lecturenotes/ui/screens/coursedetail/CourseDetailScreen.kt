@@ -1,6 +1,8 @@
 package com.cyberboyone.lecturenotes.ui.screens.coursedetail
 
 import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
@@ -48,14 +51,38 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
 
     val updateAvailable = course != null && downloaded?.isUpdateAvailable(course!!.latestVersion) == true
     val courseCode = extractCourseCode(courseId, course?.title.orEmpty())
+    var showDeleteConfirm by remember { mutableStateOf(false) }
 
     LaunchedEffect(downloadState) {
         val state = downloadState
         if (state is DownloadState.Downloaded && state.shouldShowInterstitial) {
-            (context as? Activity)?.let { activity ->
+            context.findActivity()?.let { activity ->
                 container.adManager.showInterstitialIfReady(activity)
             }
         }
+    }
+
+    if (showDeleteConfirm) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirm = false },
+            title = { Text("Delete Downloaded Note?", fontWeight = FontWeight.Bold) },
+            text = { Text("Are you sure you want to delete $courseCode from your device? You can re-download it anytime for free.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteConfirm = false
+                        viewModel.deleteDownload(courseId)
+                    }
+                ) {
+                    Text("Delete", color = Coral, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteConfirm = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 
     Scaffold(
@@ -328,12 +355,19 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
             if (isAlreadyDownloaded && !isDownloading) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     TextButton(onClick = { viewModel.download(courseId) }) {
                         Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(16.dp), tint = ElectricViolet)
                         Spacer(Modifier.width(6.dp))
-                        Text("Re-download note with latest key", color = ElectricViolet, fontWeight = FontWeight.SemiBold)
+                        Text("Re-download", color = ElectricViolet, fontWeight = FontWeight.SemiBold)
+                    }
+                    Spacer(Modifier.width(16.dp))
+                    TextButton(onClick = { showDeleteConfirm = true }) {
+                        Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(16.dp), tint = Coral)
+                        Spacer(Modifier.width(6.dp))
+                        Text("Delete Note", color = Coral, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
@@ -370,4 +404,10 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
             }
         }
     }
+}
+
+private tailrec fun Context.findActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
 }

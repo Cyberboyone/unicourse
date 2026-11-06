@@ -57,6 +57,13 @@ class DownloadRepository(
         dao.delete(courseId)
     }
 
+    suspend fun deleteDownload(courseId: String) {
+        val entity = dao.get(courseId)
+        val version = entity?.downloadedVersion ?: 1
+        fileManager.deleteDownload(courseId, version)
+        dao.delete(courseId)
+    }
+
     /** Decrypted bytes for the reader. Never persisted to disk. */
     fun readCourseBytes(localEncryptedPath: String): ByteArray =
         fileManager.readDecrypted(localEncryptedPath)

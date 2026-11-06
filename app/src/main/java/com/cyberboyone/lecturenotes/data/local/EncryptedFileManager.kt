@@ -123,6 +123,12 @@ class EncryptedFileManager(private val context: Context) {
 
     fun deleteDownload(courseId: String, version: Int) {
         fileFor(courseId, version).delete()
+        val dir = File(context.filesDir, "downloads")
+        if (dir.exists()) {
+            dir.listFiles { _, name -> name.startsWith("$courseId.") || name.startsWith(courseId) }?.forEach {
+                runCatching { it.delete() }
+            }
+        }
     }
 
     private fun fileFor(courseId: String, version: Int): File {

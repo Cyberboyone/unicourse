@@ -30,7 +30,7 @@ class InterstitialAdPolicy(context: Context) {
 
         val lastShownAt = prefs.getLong(KEY_LAST_SHOWN_AT, 0L)
         val now = System.currentTimeMillis()
-        if (now - lastShownAt < MIN_GAP_MS) return false
+        if (count > 1 && now - lastShownAt < MIN_GAP_MS) return false
 
         prefs.edit().putLong(KEY_LAST_SHOWN_AT, now).apply()
         return true
@@ -39,6 +39,6 @@ class InterstitialAdPolicy(context: Context) {
     companion object {
         private const val KEY_DOWNLOAD_COUNT = "download_count"
         private const val KEY_LAST_SHOWN_AT = "last_shown_at"
-        private const val MIN_GAP_MS = 3 * 60 * 1000L // 3 minutes
+        private const val MIN_GAP_MS = 45 * 1000L // 45 seconds minimum gap
     }
 }

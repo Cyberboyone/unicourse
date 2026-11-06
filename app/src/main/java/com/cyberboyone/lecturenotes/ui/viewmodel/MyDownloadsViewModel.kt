@@ -35,4 +35,11 @@ class MyDownloadsViewModel(
             }
         }
     }
+
+    fun deleteDownload(courseId: String, version: Int) {
+        viewModelScope.launch {
+            downloadRepo.removeDownload(courseId, version)
+            refresh()
+        }
+    }
 }

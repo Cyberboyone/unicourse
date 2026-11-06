@@ -58,4 +58,13 @@ class CourseDetailViewModel(
                 }
         }
     }
+
+    fun deleteDownload(courseId: String) {
+        val dl = _downloaded.value ?: return
+        viewModelScope.launch {
+            downloadRepo.removeDownload(courseId, dl.downloadedVersion)
+            _downloaded.value = null
+            _downloadState.value = DownloadState.Idle
+        }
+    }
 }

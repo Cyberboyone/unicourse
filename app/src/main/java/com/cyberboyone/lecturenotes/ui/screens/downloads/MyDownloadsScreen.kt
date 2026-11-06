@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -39,6 +40,7 @@ fun MyDownloadsScreen(navController: NavHostController) {
 
     var searchQuery by remember { mutableStateOf("") }
     var totalStorageBytes by remember { mutableLongStateOf(0L) }
+    var itemToDelete by remember { mutableStateOf<DownloadedCourseRow?>(null) }
 
     LaunchedEffect(rows) {
         totalStorageBytes = withContext(Dispatchers.IO) {
@@ -58,6 +60,31 @@ fun MyDownloadsScreen(navController: NavHostController) {
                 (r.course?.title?.lowercase()?.contains(q) == true)
             }
         }
+    }
+
+    itemToDelete?.let { row ->
+        val code = extractCourseCode(row.downloaded.courseId, row.course?.title.orEmpty())
+        AlertDialog(
+            onDismissRequest = { itemToDelete = null },
+            title = { Text("Delete Downloaded Note?", fontWeight = FontWeight.Bold) },
+            text = { Text("Are you sure you want to delete $code from your offline storage? You can re-download it anytime for free.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val toDelete = row
+                        itemToDelete = null
+                        viewModel.deleteDownload(toDelete.downloaded.courseId, toDelete.downloaded.downloadedVersion)
+                    }
+                ) {
+                    Text("Delete", color = Coral, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { itemToDelete = null }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 
     Scaffold(
@@ -124,7 +151,8 @@ fun MyDownloadsScreen(navController: NavHostController) {
                         DownloadedCourseCard(
                             row = row,
                             onOpen = { navController.navigate(Routes.reader(row.downloaded.courseId)) },
-                            onDetail = { navController.navigate(Routes.courseDetail(row.downloaded.courseId)) }
+                            onDetail = { navController.navigate(Routes.courseDetail(row.downloaded.courseId)) },
+                            onDelete = { itemToDelete = row }
                         )
                     },
                     adContent = { NativeAdCard() }
@@ -138,7 +166,8 @@ fun MyDownloadsScreen(navController: NavHostController) {
 fun DownloadedCourseCard(
     row: DownloadedCourseRow,
     onOpen: () -> Unit,
-    onDetail: () -> Unit
+    onDetail: () -> Unit,
+    onDelete: () -> Unit
 ) {
     val courseCode = extractCourseCode(row.downloaded.courseId, row.course?.title.orEmpty())
 
@@ -224,6 +253,20 @@ fun DownloadedCourseCard(
             }
 
             Spacer(Modifier.width(8.dp))
+
+            IconButton(
+                onClick = onDelete,
+                modifier = Modifier.size(38.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete note",
+                    tint = Coral,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            Spacer(Modifier.width(4.dp))
 
             Button(
                 onClick = onOpen,

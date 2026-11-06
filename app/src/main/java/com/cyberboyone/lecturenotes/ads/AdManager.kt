@@ -35,27 +35,52 @@ class AdManager(private val context: Context) {
         )
     }
 
-    /** Shows a preloaded interstitial if one is ready, then preloads the next one. */
+    /** Shows an interstitial. If preloaded, shows immediately; otherwise loads on-demand and shows. */
     fun showInterstitialIfReady(activity: Activity, onDismissed: () -> Unit = {}) {
         val ad = interstitialAd
-        if (ad == null) {
-            onDismissed()
-            preloadInterstitial()
-            return
-        }
-        ad.fullScreenContentCallback = object : FullScreenContentCallback() {
-            override fun onAdDismissedFullScreenContent() {
-                interstitialAd = null
-                preloadInterstitial()
-                onDismissed()
+        if (ad != null) {
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    interstitialAd = null
+                    preloadInterstitial()
+                    onDismissed()
+                }
+                override fun onAdFailedToShowFullScreenContent(error: com.google.android.gms.ads.AdError) {
+                    interstitialAd = null
+                    preloadInterstitial()
+                    onDismissed()
+                }
             }
-            override fun onAdFailedToShowFullScreenContent(error: com.google.android.gms.ads.AdError) {
-                interstitialAd = null
-                preloadInterstitial()
-                onDismissed()
-            }
+            ad.show(activity)
+        } else {
+            // Not ready yet: load and show on-demand so user definitely sees the ad
+            InterstitialAd.load(
+                activity,
+                INTERSTITIAL_AD_UNIT_ID,
+                AdRequest.Builder().build(),
+                object : InterstitialAdLoadCallback() {
+                    override fun onAdLoaded(loadedAd: InterstitialAd) {
+                        loadedAd.fullScreenContentCallback = object : FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                interstitialAd = null
+                                preloadInterstitial()
+                                onDismissed()
+                            }
+                            override fun onAdFailedToShowFullScreenContent(error: com.google.android.gms.ads.AdError) {
+                                interstitialAd = null
+                                preloadInterstitial()
+                                onDismissed()
+                            }
+                        }
+                        loadedAd.show(activity)
+                    }
+                    override fun onAdFailedToLoad(error: com.google.android.gms.ads.LoadAdError) {
+                        interstitialAd = null
+                        onDismissed()
+                    }
+                }
+            )
         }
-        ad.show(activity)
     }
 
     companion object {
