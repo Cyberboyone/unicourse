@@ -325,6 +325,19 @@ fun CourseDetailScreen(navController: NavHostController, courseId: String) {
                 modifier = Modifier.fillMaxWidth()
             )
 
+            if (isAlreadyDownloaded && !isDownloading) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TextButton(onClick = { viewModel.download(courseId) }) {
+                        Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(16.dp), tint = ElectricViolet)
+                        Spacer(Modifier.width(6.dp))
+                        Text("Re-download note with latest key", color = ElectricViolet, fontWeight = FontWeight.SemiBold)
+                    }
+                }
+            }
+
             // Animated Download Progress
             AnimatedVisibility(visible = isDownloading) {
                 Row(

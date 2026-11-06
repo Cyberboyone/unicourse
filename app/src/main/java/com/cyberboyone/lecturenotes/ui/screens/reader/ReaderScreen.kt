@@ -8,10 +8,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,10 +27,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.cyberboyone.lecturenotes.di.LocalAppContainer
-import com.cyberboyone.lecturenotes.ui.components.ErrorStateView
+import com.cyberboyone.lecturenotes.ui.components.GradientButton
 import com.cyberboyone.lecturenotes.ui.theme.*
 import com.github.barteksc.pdfviewer.PDFView
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
@@ -37,12 +40,14 @@ import kotlinx.coroutines.withContext
  * - In-memory only decryption: zero plaintext bytes written to disk
  * - Zero ads: strict educational reader guarantee
  * - Continuous vertical scroll with page counter & fit-to-width
+ * - Automatic one-tap re-download recovery if old key or corrupted file
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReaderScreen(courseId: String, onBack: () -> Unit = {}) {
     val container = LocalAppContainer.current
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     DisposableEffect(Unit) {
         (context as? Activity)?.window?.setFlags(
@@ -59,14 +64,17 @@ fun ReaderScreen(courseId: String, onBack: () -> Unit = {}) {
     var pdfBytes by remember { mutableStateOf<ByteArray?>(null) }
     var error by remember { mutableStateOf<String?>(null) }
     var courseTitle by remember { mutableStateOf(courseId.uppercase()) }
+    var courseVersion by remember { mutableIntStateOf(1) }
     var currentPage by remember { mutableIntStateOf(1) }
     var totalPages by remember { mutableIntStateOf(0) }
     var isPdfReady by remember { mutableStateOf(false) }
+    var isReDownloading by remember { mutableStateOf(false) }
 
     LaunchedEffect(courseId) {
         val course = container.catalogRepository.getCourse(courseId)
         if (course != null) {
             courseTitle = course.title
+            courseVersion = course.latestVersion
         }
 
         val downloaded = container.downloadRepository.isDownloaded(courseId)
@@ -74,12 +82,33 @@ fun ReaderScreen(courseId: String, onBack: () -> Unit = {}) {
             error = "This course hasn't been downloaded yet."
             return@LaunchedEffect
         }
+        courseVersion = downloaded.downloadedVersion
+
         pdfBytes = withContext(Dispatchers.Default) {
             runCatching { container.downloadRepository.readCourseBytes(downloaded.localEncryptedPath) }
-                .getOrElse {
-                    error = "Couldn't decrypt note: ${it.localizedMessage}"
+                .getOrElse { ex ->
+                    val msg = ex.message ?: ex.localizedMessage ?: ex::class.java.simpleName
+                    error = "Couldn't decrypt note: $msg"
                     null
                 }
+        }
+    }
+
+    fun triggerReDownload() {
+        scope.launch {
+            isReDownloading = true
+            error = null
+            try {
+                val bytes = withContext(Dispatchers.IO) {
+                    container.downloadRepository.reDownloadCourse(courseId, courseVersion)
+                }
+                pdfBytes = bytes
+            } catch (e: Exception) {
+                val msg = e.message ?: e.localizedMessage ?: e::class.java.simpleName
+                error = "Re-download failed: $msg. Please check your internet connection."
+            } finally {
+                isReDownloading = false
+            }
         }
     }
 
@@ -146,11 +175,76 @@ fun ReaderScreen(courseId: String, onBack: () -> Unit = {}) {
                 .background(MaterialTheme.colorScheme.background)
         ) {
             when {
+                isReDownloading -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize().padding(32.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator(
+                            color = ElectricViolet,
+                            strokeWidth = 3.dp,
+                            modifier = Modifier.size(48.dp)
+                        )
+                        Spacer(Modifier.height(20.dp))
+                        Text(
+                            text = "Re-downloading and decrypting...",
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(Modifier.height(6.dp))
+                        Text(
+                            text = "Applying fresh device encryption key",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
                 error != null -> {
-                    ErrorStateView(
-                        message = error!!,
-                        onRetry = onBack
-                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(80.dp)
+                                .clip(CircleShape)
+                                .background(SoftYellow.copy(alpha = 0.2f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(text = "🔐", fontSize = 38.sp)
+                        }
+                        Spacer(Modifier.height(20.dp))
+                        Text(
+                            text = "Note Needs Refresh",
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            text = "This note was encrypted with an older session key. Tap below to re-download with the updated encryption key.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(Modifier.height(24.dp))
+                        GradientButton(
+                            text = "🔄 Re-download Note & Open",
+                            onClick = { triggerReDownload() },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(Modifier.height(12.dp))
+                        OutlinedButton(
+                            onClick = onBack,
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier.fillMaxWidth().height(48.dp)
+                        ) {
+                            Text("Go Back")
+                        }
+                    }
                 }
                 pdfBytes == null -> {
                     Column(
@@ -204,7 +298,8 @@ fun ReaderScreen(courseId: String, onBack: () -> Unit = {}) {
                                         currentPage = page + 1
                                     }
                                     .onError { t ->
-                                        error = "Failed to render PDF: ${t.localizedMessage}"
+                                        val msg = t.message ?: t.localizedMessage ?: t::class.java.simpleName
+                                        error = "Failed to render PDF: $msg"
                                     }
                                     .load()
                             }

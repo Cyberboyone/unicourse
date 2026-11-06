@@ -38,6 +38,20 @@ class DownloadRepository(
         return DownloadedCourse(courseId, version, path, entity.downloadedAtEpochMs)
     }
 
+    /** Downloads and encrypts a course version, returning the decrypted bytes directly for immediate reading. */
+    suspend fun reDownloadCourse(courseId: String, version: Int): ByteArray {
+        val plainBytes = r2Client(courseId, version)
+        val path = fileManager.saveEncrypted(courseId, version, plainBytes)
+        val entity = DownloadedCourseEntity(
+            courseId = courseId,
+            downloadedVersion = version,
+            localEncryptedPath = path,
+            downloadedAtEpochMs = System.currentTimeMillis()
+        )
+        dao.upsert(entity)
+        return plainBytes
+    }
+
     suspend fun removeDownload(courseId: String, version: Int) {
         fileManager.deleteDownload(courseId, version)
         dao.delete(courseId)
