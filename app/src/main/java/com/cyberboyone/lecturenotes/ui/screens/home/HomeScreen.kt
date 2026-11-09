@@ -345,12 +345,12 @@ fun HomeScreen(navController: NavHostController) {
                 }
             }
 
-            // Browse Faculties Preview Section
+            // Browse Faculties Section - SHOW ALL 9 FACULTIES
             item {
                 Column(modifier = Modifier.padding(top = 20.dp)) {
                     SectionHeader(
-                        title = "Browse Faculties",
-                        action = "All Faculties",
+                        title = "Browse Faculties (${faculties.size})",
+                        action = "Explore All",
                         onAction = { navController.navigate(Routes.FACULTIES) }
                     )
 
@@ -360,8 +360,7 @@ fun HomeScreen(navController: NavHostController) {
                             .padding(horizontal = 16.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        val previewFaculties = faculties.take(4)
-                        previewFaculties.forEach { faculty ->
+                        faculties.forEach { faculty ->
                             HomeFacultyCard(
                                 faculty = faculty,
                                 onClick = { navController.navigate(Routes.departments(faculty.id)) }

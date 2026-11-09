@@ -226,7 +226,7 @@ fun ErrorStateView(
         )
         Spacer(Modifier.height(8.dp))
         Text(
-            text = message,
+            text = com.cyberboyone.lecturenotes.util.ErrorFormatter.format(message),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center

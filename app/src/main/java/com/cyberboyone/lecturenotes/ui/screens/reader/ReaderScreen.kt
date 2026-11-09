@@ -29,6 +29,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.cyberboyone.lecturenotes.di.LocalAppContainer
 import com.cyberboyone.lecturenotes.ui.components.GradientButton
 import com.cyberboyone.lecturenotes.ui.theme.*
+import com.cyberboyone.lecturenotes.util.ErrorFormatter
 import com.github.barteksc.pdfviewer.PDFView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,8 +88,7 @@ fun ReaderScreen(courseId: String, onBack: () -> Unit = {}) {
         pdfBytes = withContext(Dispatchers.Default) {
             runCatching { container.downloadRepository.readCourseBytes(downloaded.localEncryptedPath) }
                 .getOrElse { ex ->
-                    val msg = ex.message ?: ex.localizedMessage ?: ex::class.java.simpleName
-                    error = "Couldn't decrypt note: $msg"
+                    error = ErrorFormatter.format(ex, "Unable to decrypt note. Please tap 'Re-download' to refresh.")
                     null
                 }
         }
@@ -104,8 +104,7 @@ fun ReaderScreen(courseId: String, onBack: () -> Unit = {}) {
                 }
                 pdfBytes = bytes
             } catch (e: Exception) {
-                val msg = e.message ?: e.localizedMessage ?: e::class.java.simpleName
-                error = "Re-download failed: $msg. Please check your internet connection."
+                error = "Re-download failed: ${ErrorFormatter.format(e)}. Please check your internet connection."
             } finally {
                 isReDownloading = false
             }

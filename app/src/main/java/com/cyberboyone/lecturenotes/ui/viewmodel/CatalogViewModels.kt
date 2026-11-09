@@ -6,6 +6,7 @@ import com.cyberboyone.lecturenotes.data.model.Course
 import com.cyberboyone.lecturenotes.data.model.Department
 import com.cyberboyone.lecturenotes.data.model.Faculty
 import com.cyberboyone.lecturenotes.data.repository.CatalogRepository
+import com.cyberboyone.lecturenotes.util.ErrorFormatter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,7 +36,7 @@ class FacultyListViewModel(private val repo: CatalogRepository) : ViewModel() {
                 val list = repo.getFaculties()
                 _faculties.value = list
             } catch (e: Exception) {
-                _errorMessage.value = e.localizedMessage ?: "Failed to load faculties"
+                _errorMessage.value = ErrorFormatter.format(e, "Failed to load faculties. Please retry.")
             } finally {
                 _isLoading.value = false
             }
@@ -65,7 +66,7 @@ class DepartmentListViewModel(private val repo: CatalogRepository, private val f
                 val list = repo.getDepartments(facultyId)
                 _departments.value = list
             } catch (e: Exception) {
-                _errorMessage.value = e.localizedMessage ?: "Failed to load departments"
+                _errorMessage.value = ErrorFormatter.format(e, "Failed to load departments. Please retry.")
             } finally {
                 _isLoading.value = false
             }
@@ -95,7 +96,7 @@ class CourseListViewModel(private val repo: CatalogRepository, private val depar
                 val list = repo.getCourses(departmentId)
                 _courses.value = list
             } catch (e: Exception) {
-                _errorMessage.value = e.localizedMessage ?: "Failed to load courses"
+                _errorMessage.value = ErrorFormatter.format(e, "Failed to load courses. Please retry.")
             } finally {
                 _isLoading.value = false
             }

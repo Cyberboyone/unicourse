@@ -7,6 +7,7 @@ import com.cyberboyone.lecturenotes.data.model.Course
 import com.cyberboyone.lecturenotes.data.model.DownloadedCourse
 import com.cyberboyone.lecturenotes.data.repository.CatalogRepository
 import com.cyberboyone.lecturenotes.data.repository.DownloadRepository
+import com.cyberboyone.lecturenotes.util.ErrorFormatter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -54,7 +55,7 @@ class CourseDetailViewModel(
                     _downloadState.value = DownloadState.Downloaded(shouldShowInterstitial = shouldShow)
                 }
                 .onFailure { e ->
-                    _downloadState.value = DownloadState.Failed(e.message ?: "Download failed")
+                    _downloadState.value = DownloadState.Failed(ErrorFormatter.format(e, "Download failed. Please check your network and try again."))
                 }
         }
     }

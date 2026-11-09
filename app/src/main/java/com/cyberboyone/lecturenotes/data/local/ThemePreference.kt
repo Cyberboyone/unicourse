@@ -18,8 +18,8 @@ class ThemePreference(context: Context) {
     val themeMode: StateFlow<AppThemeMode> = _themeMode.asStateFlow()
 
     private fun getSavedTheme(): AppThemeMode {
-        val name = prefs.getString(KEY_THEME_MODE, AppThemeMode.SYSTEM.name) ?: AppThemeMode.SYSTEM.name
-        return runCatching { AppThemeMode.valueOf(name) }.getOrDefault(AppThemeMode.SYSTEM)
+        val name = prefs.getString(KEY_THEME_MODE, AppThemeMode.DARK.name) ?: AppThemeMode.DARK.name
+        return runCatching { AppThemeMode.valueOf(name) }.getOrDefault(AppThemeMode.DARK)
     }
 
     fun setThemeMode(mode: AppThemeMode) {
