@@ -6,14 +6,14 @@ plugins {
 
 android {
     namespace = "com.cyberboyone.lecturenotes"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.cyberboyone.lecturenotes"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 3
-        versionName = "1.0.2"
+        targetSdk = 36
+        versionCode = 4
+        versionName = "1.0.3"
     }
 
     signingConfigs {

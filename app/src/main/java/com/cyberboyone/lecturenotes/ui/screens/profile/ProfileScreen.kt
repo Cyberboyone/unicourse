@@ -231,7 +231,7 @@ fun ProfileScreen(navController: NavHostController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "UniCourse Nigeria • v1.0.2 (Build 3)",
+                    text = "UniCourse Nigeria • v1.0.3 (Build 4)",
                     style = MaterialTheme.typography.labelMedium.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontWeight = FontWeight.SemiBold
