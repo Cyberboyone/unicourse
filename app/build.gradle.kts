@@ -12,14 +12,24 @@ android {
         applicationId = "com.cyberboyone.lecturenotes"
         minSdk = 24
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 3
+        versionName = "1.0.2"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("unicourse-release-key.jks")
+            storePassword = "unicourse123"
+            keyAlias = "unicourse"
+            keyPassword = "unicourse123"
+        }
     }
 
     buildTypes {
         release {
+            isDebuggable = false
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         debug {
