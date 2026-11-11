@@ -12,8 +12,8 @@ android {
         applicationId = "com.cyberboyone.lecturenotes"
         minSdk = 24
         targetSdk = 36
-        versionCode = 4
-        versionName = "1.0.3"
+        versionCode = 5
+        versionName = "1.0.4"
     }
 
     signingConfigs {
@@ -28,7 +28,8 @@ android {
     buildTypes {
         release {
             isDebuggable = false
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
@@ -79,6 +80,9 @@ dependencies {
 
     // PDF rendering (in-app reader)
     implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
+
+    // Force modern androidx.fragment to replace any outdated transitive versions
+    implementation("androidx.fragment:fragment-ktx:1.8.1")
 
     // AdMob
     implementation("com.google.android.gms:play-services-ads:23.2.0")
